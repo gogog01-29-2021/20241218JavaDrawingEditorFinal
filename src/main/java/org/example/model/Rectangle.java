@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.awt.*;
 
@@ -38,7 +38,7 @@ public class Rectangle extends BaseShape {
     }
 
     @Override
-    public BaseShape copy() {
+    public BaseShape copy(int i) {
         return new Rectangle(id + 1, x1, y1, x2, y2, color);
     }
     @Override

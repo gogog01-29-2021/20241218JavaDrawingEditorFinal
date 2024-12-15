@@ -1,4 +1,8 @@
-package org.example;
+package org.example.ui;
+
+import org.example.Canvas;
+import org.example.LayerManager;
+import org.example.model.BaseShape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +11,7 @@ import java.util.List;
 public class LayerPanel extends JPanel {
     private final LayerManager layerManager;
     private final JList<String> layerList;
-    private Canvas canvas;
+    private org.example.Canvas canvas;
 
     public LayerPanel(LayerManager layerManager) {
         this.layerManager = layerManager;

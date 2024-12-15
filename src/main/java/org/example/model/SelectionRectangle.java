@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ public class SelectionRectangle extends BaseShape {
     private int x1, y1, x2, y2;
     private final List<BaseShape> selectedShapes = new ArrayList<>();
 
-    private int mouseOffsetX, mouseOffsetY;
     public SelectionRectangle(int x1, int y1, Color color) {
         super(-1, x1, y1, x1, y1, color);
         this.x1 = x1;
@@ -30,8 +29,8 @@ public class SelectionRectangle extends BaseShape {
         this.y2 = y;
         int centerX = (x1 + x2) / 2;
         int centerY = (y1 + y2) / 2;
-        this.mouseOffsetX = x1 - centerX;
-        this.mouseOffsetY = y1 - centerY;
+        int mouseOffsetX = x1 - centerX;
+        int mouseOffsetY = y1 - centerY;
     }
 
     @Override
@@ -42,8 +41,8 @@ public class SelectionRectangle extends BaseShape {
 
     public int[] getSelectedShapeIndexes() {
         List<Integer> indexes = new ArrayList<>();
-        for (int i = 0; i < selectedShapes.size(); i++) {
-            indexes.add(selectedShapes.get(i).id);
+        for (BaseShape selectedShape : selectedShapes) {
+            indexes.add(selectedShape.id);
         }
         int[] result = new int[indexes.size()];
         for (int i = 0; i < indexes.size(); i++) {
@@ -54,9 +53,30 @@ public class SelectionRectangle extends BaseShape {
 
     public void updateSelection(List<BaseShape> shapes) {
         selectedShapes.clear();
+        int selectionMinX = Math.min(x1, x2);
+        int selectionMinY = Math.min(y1, y2);
+        int selectionMaxX = Math.max(x1, x2);
+        int selectionMaxY = Math.max(y1, y2);
         for (BaseShape shape : shapes) {
             if (this.contains(shape.getX(), shape.getY()) || this.contains(shape.getX() + shape.getWidth(), shape.getY() + shape.getHeight())) {
                 selectedShapes.add(shape);
+            } else if (shape instanceof ShapeGroup) {
+                // Get bounds of the current shape
+                Point[] shapeBounds = shape.getBoundsXY();
+                int shapeMinX = shapeBounds[0].x;
+                int shapeMinY = shapeBounds[0].y;
+                int shapeMaxX = shapeBounds[1].x;
+                int shapeMaxY = shapeBounds[1].y;
+
+                // Check if the bounding rectangles intersect
+                boolean intersects = !(selectionMaxX < shapeMinX ||  // Selection is left of shape
+                        selectionMinX > shapeMaxX ||  // Selection is right of shape
+                        selectionMaxY < shapeMinY ||  // Selection is above shape
+                        selectionMinY > shapeMaxY);   // Selection is below shape
+
+                if (intersects) {
+                    selectedShapes.add(shape);
+                }
             }
         }
     }
@@ -85,7 +105,7 @@ public class SelectionRectangle extends BaseShape {
     }
 
     @Override
-    public BaseShape copy() {
+    public BaseShape copy(int i) {
         return new SelectionRectangle(x1, y1, color);
     }
 

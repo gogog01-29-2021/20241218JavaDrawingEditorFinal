@@ -1,4 +1,6 @@
-package org.example;
+package org.example.model;
+
+import org.example.model.BaseShape;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +24,13 @@ public class Layer implements Serializable {
     public List<BaseShape> getShapes() {
         return shapes;
     }
+
+    public void updateShapeIds(int size) {
+        for (int i = 0; i < size; i++) {
+            shapes.get(i).setId(i);
+        }
+    }
+
 
     public void setShapes(List<BaseShape> newShapes) {
         this.shapes = newShapes;

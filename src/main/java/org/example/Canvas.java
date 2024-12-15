@@ -1,5 +1,9 @@
 package org.example;
 
+import org.example.model.*;
+import org.example.model.Rectangle;
+import org.example.ui.LayerPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -11,6 +15,7 @@ public class Canvas extends JPanel {
     private String currentTool = "select";
     private boolean isShapesSelected = false;
     private BaseShape tempShape;
+    private List<BaseShape> tempShapes;
     private BaseShape selectedShape;
     private Color currentColor = BaseShape.getDefaultColor();
     private int lastX, lastY;
@@ -19,6 +24,8 @@ public class Canvas extends JPanel {
     private final LayerPanel layerPanel;
     private SelectionRectangle selectionRectangle;
     private int shapeCounter = 0;
+
+    private int groupCounter = 0;
     private boolean isMoved = false;
 
     public Canvas(LayerManager layerManager, JLabel statusBar, LayerPanel layerPanel) {
@@ -93,13 +100,14 @@ public class Canvas extends JPanel {
 
             // If no shape is selected, and a drawing tool is active, create a new shape
             if (currentTool != null) {
+                int i = layerManager.getActiveLayer().getShapes().size();
                 switch (currentTool) {
                     case "line" ->
-                            tempShape = new Line(shapeCounter, e.getX(), e.getY(), e.getX(), e.getY(), currentColor);
+                            tempShape = new Line(i, e.getX(), e.getY(), e.getX(), e.getY(), currentColor);
                     case "rectangle" ->
-                            tempShape = new Rectangle(shapeCounter, e.getX(), e.getY(), e.getX(), e.getY(), currentColor);
+                            tempShape = new Rectangle(i, e.getX(), e.getY(), e.getX(), e.getY(), currentColor);
                     case "circle" ->
-                            tempShape = new Circle(shapeCounter, e.getX(), e.getY(), e.getX(), e.getY(), currentColor);
+                            tempShape = new Circle(i, e.getX(), e.getY(), e.getX(), e.getY(), currentColor);
                     default -> tempShape = null; // Ensure tempShape is null if the tool is unrecognized
                 }
             }
@@ -116,6 +124,7 @@ public class Canvas extends JPanel {
             selectionRectangle.setEndCoordinates(e.getX(), e.getY());
             selectionRectangle.updateSelection(layerManager.getActiveLayer().getShapes());
             layerPanel.setSelectedIndexes(selectionRectangle.getSelectedShapeIndexes());
+            selectedShape = null;
         } else if (selectedShape != null) {
             selectedShape.moveBy(e.getX() - lastX, e.getY() - lastY);
             lastX = e.getX();
@@ -133,6 +142,8 @@ public class Canvas extends JPanel {
                 selectionRectangle = null;
                 isMoved = false;
                 isShapesSelected = false;
+            } else if (selectionRectangle.getSelectedShapes().isEmpty()) {
+                selectionRectangle = null;
             }
             selectedShape = null;
         } else if (tempShape != null) {
@@ -174,19 +185,59 @@ public class Canvas extends JPanel {
 
     public void copyShape() {
         if (selectedShape != null) {
-            tempShape = selectedShape.copy();
+            tempShape = selectedShape.copy(1);
+        } else if (selectionRectangle != null) {
+            if (selectionRectangle.getSelectedShapes().size() > 0) {
+                tempShapes = selectionRectangle.getSelectedShapes();
+            }
         }
+    }
+
+    public void groupShapes() {
+        if (selectionRectangle != null && !selectionRectangle.getSelectedShapes().isEmpty()) {
+            ShapeGroup group = new ShapeGroup(shapeCounter-groupCounter);
+            for (BaseShape shape : selectionRectangle.getSelectedShapes()) {
+                layerManager.getActiveLayer().removeShape(shape);
+                group.addShape(shape);
+            }
+            layerManager.getActiveLayer().addShape(group);
+            layerPanel.updateLayerList();
+            groupCounter++;
+            layerManager.getActiveLayer().updateShapeIds(layerManager.getActiveLayer().getShapes().size());
+            isShapesSelected = false;
+            selectionRectangle = null;
+            repaint();
+            JOptionPane.showMessageDialog(this, "Shapes grouped successfully!");
+        } else {
+            JOptionPane.showMessageDialog(this, "No shapes selected to group.");
+        }
+
     }
 
     public void pasteShape() {
         if (tempShape != null) {
-            BaseShape copiedShape = tempShape.copy();
+            BaseShape copiedShape = tempShape.copy(1);
             tempShape = null;
             layerManager.getActiveLayer().addShape(copiedShape);
             layerPanel.updateLayerList();
             shapeCounter++;
             updateStatusBar();
             repaint();
+        } else if (tempShapes.size() > 0) {
+            for (BaseShape shape: tempShapes) {
+                BaseShape copiedShape = shape.copy(tempShapes.size());
+                layerManager.getActiveLayer().addShape(copiedShape);
+                layerPanel.updateLayerList();
+                if (shape instanceof ShapeGroup) {
+                    groupCounter++;
+                } else {
+                    shapeCounter++;
+                }
+                layerManager.getActiveLayer().updateShapeIds(layerManager.getActiveLayer().getShapes().size());
+                updateStatusBar();
+                repaint();
+            }
+            tempShapes = null;
         }
     }
 
@@ -196,6 +247,28 @@ public class Canvas extends JPanel {
             layerPanel.updateLayerList();
             selectedShape = null;
             updateStatusBar();
+            if (selectedShape instanceof ShapeGroup) {
+                groupCounter--;
+            } else {
+                shapeCounter--;
+            }
+            layerManager.getActiveLayer().updateShapeIds(layerManager.getActiveLayer().getShapes().size());
+            repaint();
+        } else if (selectionRectangle != null) {
+            List<BaseShape> shapes = selectionRectangle.getSelectedShapes();
+            for (BaseShape shape : shapes) {
+                layerManager.getActiveLayer().removeShape(shape);
+                if (shape instanceof ShapeGroup) {
+                    groupCounter--;
+                } else {
+                    shapeCounter--;
+                }
+            }
+            isShapesSelected = false;
+            selectionRectangle = null;
+            layerPanel.updateLayerList();
+            updateStatusBar();
+            layerManager.getActiveLayer().updateShapeIds(layerManager.getActiveLayer().getShapes().size());
             repaint();
         }
     }

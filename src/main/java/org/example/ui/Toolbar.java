@@ -1,4 +1,6 @@
-package org.example;
+package org.example.ui;
+
+import org.example.Canvas;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -73,6 +75,9 @@ public class Toolbar extends JPanel {
         addHoverEffect(redoButton);
 
         // Add actions to buttons (example placeholder)
+        addAction(groupButton, () -> {
+            ((Canvas) canvas).groupShapes();
+        });
         addAction(copyButton, () -> {
             ((Canvas) canvas).copyShape();
         });
