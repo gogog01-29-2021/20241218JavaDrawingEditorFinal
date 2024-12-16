@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,6 +27,10 @@ public class SelectionRectangle extends BaseShape {
     public void setEndCoordinates(int x, int y) {
         this.x2 = x;
         this.y2 = y;
+        int centerX = (x1 + x2) / 2;
+        int centerY = (y1 + y2) / 2;
+        int mouseOffsetX = x1 - centerX;
+        int mouseOffsetY = y1 - centerY;
     }
 
     @Override
@@ -37,8 +41,8 @@ public class SelectionRectangle extends BaseShape {
 
     public int[] getSelectedShapeIndexes() {
         List<Integer> indexes = new ArrayList<>();
-        for (int i = 0; i < selectedShapes.size(); i++) {
-            indexes.add(i);
+        for (BaseShape selectedShape : selectedShapes) {
+            indexes.add(selectedShape.id);
         }
         int[] result = new int[indexes.size()];
         for (int i = 0; i < indexes.size(); i++) {
@@ -49,9 +53,30 @@ public class SelectionRectangle extends BaseShape {
 
     public void updateSelection(List<BaseShape> shapes) {
         selectedShapes.clear();
+        int selectionMinX = Math.min(x1, x2);
+        int selectionMinY = Math.min(y1, y2);
+        int selectionMaxX = Math.max(x1, x2);
+        int selectionMaxY = Math.max(y1, y2);
         for (BaseShape shape : shapes) {
             if (this.contains(shape.getX(), shape.getY()) || this.contains(shape.getX() + shape.getWidth(), shape.getY() + shape.getHeight())) {
                 selectedShapes.add(shape);
+            } else if (shape instanceof ShapeGroup) {
+                // Get bounds of the current shape
+                Point[] shapeBounds = shape.getBoundsXY();
+                int shapeMinX = shapeBounds[0].x;
+                int shapeMinY = shapeBounds[0].y;
+                int shapeMaxX = shapeBounds[1].x;
+                int shapeMaxY = shapeBounds[1].y;
+
+                // Check if the bounding rectangles intersect
+                boolean intersects = !(selectionMaxX < shapeMinX ||  // Selection is left of shape
+                        selectionMinX > shapeMaxX ||  // Selection is right of shape
+                        selectionMaxY < shapeMinY ||  // Selection is above shape
+                        selectionMinY > shapeMaxY);   // Selection is below shape
+
+                if (intersects) {
+                    selectedShapes.add(shape);
+                }
             }
         }
     }
@@ -80,8 +105,26 @@ public class SelectionRectangle extends BaseShape {
     }
 
     @Override
-    public BaseShape copy() {
+    public BaseShape copy(int i) {
         return new SelectionRectangle(x1, y1, color);
+    }
+
+    public void moveSelectedShapes(int dx, int dy) {
+        for (BaseShape shape : selectedShapes) {
+            shape.moveBy(dx, dy);
+        }
+    }
+
+    public void updateWhileDragging(int mouseX, int mouseY) {
+        int rectCenterX = (x1 + x2) / 2;
+        int rectCenterY = (y1 + y2) / 2;
+        int deltaX = mouseX - rectCenterX;
+        int deltaY = mouseY - rectCenterY;
+        x1 += deltaX;
+        y1 += deltaY;
+        x2 += deltaX;
+        y2 += deltaY;
+        moveSelectedShapes(deltaX, deltaY);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.awt.*;
 
@@ -57,8 +57,8 @@ public class Circle extends BaseShape {
     }
 
     @Override
-    public BaseShape copy() {
-        return new Circle(id + 1, x1, y1, x2, y2, color);
+    public BaseShape copy(int i) {
+        return new Circle(id + i, x1, y1, x2, y2, color);
     }
     @Override
     public String getBounds() {

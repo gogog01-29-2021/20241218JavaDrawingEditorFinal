@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -23,12 +23,21 @@ public abstract class BaseShape implements Serializable {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public abstract void draw(Graphics g);
     public abstract boolean contains(int x, int y);
     public abstract void setEndCoordinates(int x, int y);
     public abstract void moveBy(int dx, int dy);
-    public abstract BaseShape copy();
+    public abstract BaseShape copy(int i);
     public abstract String getBounds();
+    public Point[] getBoundsXY() {
+        Point topLeft = new Point(getX(), getY());
+        Point bottomRight = new Point(getX() + getWidth(), getY() + getHeight());
+        return new Point[]{topLeft, bottomRight};
+    }
     public abstract void highlight(Graphics g);
 
     // Add getter methods
@@ -54,5 +63,32 @@ public abstract class BaseShape implements Serializable {
 
     public static void setDefaultColor(Color newColor) {
         defaultColor = newColor;
+    }
+
+    public void setX1(int x1) {
+        this.x1 = x1;
+    }
+
+    public void setY1(int y1) {
+        this.y1 = y1;
+    }
+
+    public void setX2(int x2) {
+        this.x2 = x2;
+    }
+
+    public void setY2(int y2) {
+        this.y2 = y2;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseShape{" +
+                " x1=" + x1 +
+                ", y1=" + y1 +
+                ", x2=" + x2 +
+                ", y2=" + y2 +
+                ", color=" + color +
+                '}';
     }
 }

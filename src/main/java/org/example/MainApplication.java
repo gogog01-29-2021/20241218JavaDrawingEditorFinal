@@ -1,7 +1,9 @@
 package org.example;
+import org.example.ui.LayerPanel;
+import org.example.ui.Toolbar;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class MainApplication {
 

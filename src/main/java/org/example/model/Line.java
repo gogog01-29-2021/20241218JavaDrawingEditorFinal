@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 import java.awt.*;
 
@@ -31,8 +31,8 @@ public class Line extends BaseShape {
                 y >= Math.min(y1, y2) && y <= Math.max(y1, y2);
     }
     @Override
-    public BaseShape copy() {
-        return new Line(id + 1, x1, y1, x2, y2, color);
+    public BaseShape copy(int i) {
+        return new Line(id + i, x1, y1, x2, y2, color);
     }
 
     @Override

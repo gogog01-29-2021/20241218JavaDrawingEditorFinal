@@ -1,11 +1,13 @@
 package org.example;
 
+import org.example.model.Layer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LayerManager implements Serializable {
-    private List<Layer> layers;
+    private final List<Layer> layers;
     private int activeLayerIndex;
 
     public LayerManager() {
