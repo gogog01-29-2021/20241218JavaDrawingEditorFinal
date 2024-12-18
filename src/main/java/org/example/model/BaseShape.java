@@ -6,7 +6,7 @@ import java.io.Serializable;
 public abstract class BaseShape implements Serializable {
     protected int id, x1, y1, x2, y2;
     protected Color color;
-    private static Color defaultColor = Color.BLACK;
+    private static Color defaultColor = java.awt.Color.BLACK;
 
     public abstract String getName();
 
@@ -28,6 +28,8 @@ public abstract class BaseShape implements Serializable {
     }
 
     public abstract void draw(Graphics g);
+
+    public abstract void redraw(Graphics g);
     public abstract boolean contains(int x, int y);
     public abstract void setEndCoordinates(int x, int y);
     public abstract void moveBy(int dx, int dy);
@@ -63,6 +65,14 @@ public abstract class BaseShape implements Serializable {
 
     public static void setDefaultColor(Color newColor) {
         defaultColor = newColor;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color newColor) {
+        color = newColor;
     }
 
     public void setX1(int x1) {

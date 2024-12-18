@@ -12,6 +12,13 @@ public class Line extends BaseShape {
     }
     @Override
     public void draw(Graphics g) {
+        color = getDefaultColor();
+        g.setColor(getDefaultColor());
+        g.drawLine(x1, y1, x2, y2);
+    }
+
+    @Override
+    public void redraw(Graphics g) {
         g.setColor(color);
         g.drawLine(x1, y1, x2, y2);
     }

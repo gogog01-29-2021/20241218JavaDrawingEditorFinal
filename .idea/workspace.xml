@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2fe29fc8-4ca3-4136-aceb-98dd9ecd9c32" name="Changes" comment="241002 first version without layer class,">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_12_2024,_11_10 AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_08_12_2024__11_10AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Canvas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Canvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Toolbar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Toolbar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/BaseShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/BaseShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Circle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Circle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Line.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Line.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/Rectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/Rectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/SelectionRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/SelectionRectangle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/model/ShapeGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/model/ShapeGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ui/LayerPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ui/LayerPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/ui/Toolbar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/ui/Toolbar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,22 +56,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MainApplication.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "sergey",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/danylkod/Developer/241002-Drawing-Editor",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MainApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/w/Developer/241218DrawingEditor&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="MainApplication" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
@@ -95,7 +105,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-19.0.2-corretto-19.0.2-4caba194b151-be841094" />
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-322ed176" />
       </set>
     </attachedChunks>
   </component>
@@ -120,6 +130,10 @@
       <workItem from="1730598887802" duration="2036000" />
       <workItem from="1731818316706" duration="6790000" />
       <workItem from="1732101483701" duration="1246000" />
+      <workItem from="1734433427499" duration="58000" />
+      <workItem from="1734439732439" duration="667000" />
+      <workItem from="1734448362301" duration="4672000" />
+      <workItem from="1734454375651" duration="8863000" />
     </task>
     <servers />
   </component>

@@ -37,6 +37,14 @@ public class ShapeGroup extends BaseShape {
     }
 
     @Override
+    public void redraw(Graphics g) {
+
+        for (BaseShape shape : shapes) {
+            shape.redraw(g);
+        }
+    }
+
+    @Override
     public boolean contains(int x, int y) {
         for (BaseShape shape : shapes) {
             if (shape.contains(x, y)) {

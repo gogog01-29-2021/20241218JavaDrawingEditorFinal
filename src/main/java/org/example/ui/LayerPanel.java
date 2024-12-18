@@ -18,7 +18,7 @@ public class LayerPanel extends JPanel {
         setLayout(new BorderLayout());
 
         // Darker gray background for the layer panel
-        setBackground(Color.DARK_GRAY);
+//        setBackground(Color.DARK_GRAY);
 
         layerList = new JList<>(new DefaultListModel<>());
         layerList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);

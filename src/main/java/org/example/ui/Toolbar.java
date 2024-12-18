@@ -86,11 +86,39 @@ public class Toolbar extends JPanel {
         lineButton.addActionListener(e -> toggleToolButton(lineButton, "line", canvas, statusBar));
         circleButton.addActionListener(e -> toggleToolButton(circleButton, "circle", canvas, statusBar));
         rectangleButton.addActionListener(e -> toggleToolButton(rectangleButton, "rectangle", canvas, statusBar));
-
+        colorButton.addActionListener(e->canvas.getColorModel());
         // Add actions for file operations
         addAction(newFileButton, () -> newFile(canvas, statusBar));
         addAction(saveFileButton, () -> saveFile(canvas, statusBar));
         addAction(loadFileButton, () -> loadFile(canvas, statusBar));
+        // Add actions for buttons
+        addAction(groupButton, () -> {
+            ((Canvas) canvas).groupShapes();
+        });
+        addAction(copyButton, () -> {
+            ((Canvas) canvas).copyShape();
+        });
+        addAction(pasteButton, () -> ((Canvas) canvas).pasteShape());
+        addAction(deleteButton, () -> ((Canvas) canvas).deleteShape());
+
+// Add action for color button
+        colorButton.addActionListener(e -> {
+            ((Canvas) canvas).openColorPicker();
+            statusBar.setText("Color picker opened.");
+        });
+
+
+// Add actions for undo and redo buttons
+        addAction(undoButton, () -> {
+            // Placeholder for undo action
+            statusBar.setText("Undo action triggered.");
+        });
+
+        addAction(redoButton, () -> {
+            // Placeholder for redo action
+            statusBar.setText("Redo action triggered.");
+        });
+
     }
 
     private void toggleToolButton(JButton button, String tool, JComponent canvas, JLabel statusBar) {

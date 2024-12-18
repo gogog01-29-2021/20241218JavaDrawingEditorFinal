@@ -13,8 +13,17 @@ public class Rectangle extends BaseShape {
     }
     @Override
     public void draw(Graphics g) {
+        color = getDefaultColor();
         g.setColor(color);
         g.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1));
+    }
+
+    @Override
+    public void redraw(Graphics g) {
+
+        g.setColor(color);
+        g.drawRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1));
+
     }
 
     @Override

@@ -62,7 +62,7 @@ public class Canvas extends JPanel {
 
         // Draw all permanent shapes
         for (BaseShape shape : layerManager.getActiveLayer().getShapes()) {
-            shape.draw(g);
+            shape.redraw(g);
         }
 
         // Highlight the selected shape, if any
@@ -276,8 +276,11 @@ public class Canvas extends JPanel {
     public void openColorPicker() {
         Color newColor = JColorChooser.showDialog(this, "Pick a Color", currentColor);
         if (newColor != null) {
-            currentColor = newColor;
             BaseShape.setDefaultColor(newColor);
+
+            if (selectedShape != null) {
+                selectedShape.setColor(newColor);
+            }
         }
     }
 
